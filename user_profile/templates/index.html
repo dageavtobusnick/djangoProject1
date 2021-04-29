@@ -1,27 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html dir="ltr" lang="en">
 <script>
-  async function callClick(){
-    let response=await fetch("../click/", {
-      method:"GET",
-      headers:{"X-Requested-With":"XMLHttpRequest"}
-    });
-    let answer=await response.json();
-    document.getElementById("coins").innerHTML=answer.toString()
-  }
+    async function callClick() {
+        let response = await fetch("../click/", {
+            method: "GET",
+            headers: {"X-Requested-With": "XMLHttpRequest"}
+        });
+        let answer = await response.json();
+        document.getElementById("coins").innerHTML = answer.toString()
+    }
 </script>
-  <head>
+<head>
     <meta charset="utf-8">
     <title>Title </title>
-  </head>
-  <body>
-    <div align="center">
-      <h1> Welcome, {{user.username}} </h1>
-      <div class="logout"><a href="/logout">LOGOUT</a></div>
-    </div>
-    <div>
-      <h1>You have <span id="coins">{{mainCycle.coinsCount}}</span> coins</h1>
-      <button onclick="callClick()"><h1>Click Me</h1></button>
-    </div>
-  </body>
+</head>
+<body>
+<div align="center">
+    <h1> Welcome, {{user.username}} </h1>
+    <div class="logout"><a href="/logout">LOGOUT</a></div>
+</div>
+<div>
+    <h1>You have <span id="coins">{{mainCycle.coinsCount}}</span> coins</h1>
+    <button onclick="callClick()"><h1>Click Me</h1></button>
+</div>
+</body>
 </html>

@@ -1,13 +1,12 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from rest_framework import generics
-from django.contrib.auth.tokens import default_token_generator
-from django.http import  HttpResponse
 
 from user_profile.forms import UserForm
-from user_profile.serializers import UserSerializer, UserDetailSerializer
+from user_profile.serializers import UserSerializer, UserDetailSerializer, ClickerDataSerializer
 from .models import MainCycle
 
 
@@ -21,16 +20,43 @@ class UserDetailView(generics.RetrieveAPIView):
     serializer_class = UserDetailSerializer
 
 
+class ClickView(generics.UpdateAPIView):
+    queryset = MainCycle.objects.all()
+    serializer_class = ClickerDataSerializer
+
+    def update(self, request, name):
+        user = User.objects.filter(username=name)[0]
+        cycle = MainCycle.objects.filter(user=user)[0]
+        cycle.Click()
+        cycle.save()
+        return HttpResponse(cycle.coinsCount)
+
+
+class ClickGetView(generics.UpdateAPIView):
+    queryset = MainCycle.objects.all()
+    serializer_class = ClickerDataSerializer
+
+    def update(self, request, name):
+        user = User.objects.filter(username=name)[0]
+        cycle = MainCycle.objects.filter(user=user)[0]
+        return HttpResponse(cycle.coinsCount)
+
+
 def index(request):
     user = User.objects.filter(id=request.user.id)
     if len(user) > 0:
-        mainCycle=MainCycle.objects.filter(user=request.user)[0]
-        return render(request, 'index.html', {'user': user[0],"mainCycle":mainCycle})
+        mainCycle = MainCycle.objects.filter(user=request.user)[0]
+        return render(request, 'index.html', {'user': user[0], "mainCycle": mainCycle})
     else:
         return redirect('login')
 
+
+def click(request):
+    return render(request, "clicker.html")
+
+
 def callClick(request):
-    mainCycle=MainCycle.objects.filter(user=request.user)[0]
+    mainCycle = MainCycle.objects.filter(user=request.user)[0]
     mainCycle.Click()
     mainCycle.save()
     return HttpResponse(mainCycle.coinsCount)
