@@ -3,7 +3,8 @@ from . import views
 from .views import UsersView, UserDetailView
 
 urlpatterns = [
-    path('', views.index),
+    path('', views.index,name='index'),
+    path('click/',views.callClick,name='click'),
     path('login/', views.user_login, name="login" ),
     path('logout/', views.user_logout),
     path('registration/', views.user_registration, name="registration"),
