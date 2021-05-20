@@ -11,3 +11,11 @@
 .cat:active{
     opacity: 1;
 }
+
+.upgrade{
+    position: absolute;
+    top:0;
+    right:0;
+    width: 100px;
+    height: 131px;
+}

@@ -25,4 +25,4 @@ class CycleSerializer(serializers.ModelSerializer):
 class CycleDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = MainCycle
-        fields = ['id', 'user', 'coinsCount', 'clickPower']
+        fields = ['id', 'user', 'coinsCount', 'clickPower','boosts']

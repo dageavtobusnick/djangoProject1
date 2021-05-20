@@ -1,9 +1,9 @@
 from django.contrib.auth.models import User
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from rest_framework import generics
 
 from user_profile.serializers import UserSerializer, UserDetailSerializer, CycleSerializer, CycleDetailSerializer
-from .models import MainCycle
+from .models import MainCycle, Boost
 
 
 class UsersView(generics.ListCreateAPIView):
@@ -31,3 +31,19 @@ def call_click(request):
     main_cycle.click()
     main_cycle.save()
     return HttpResponse(main_cycle.coinsCount)
+
+def buy_boost(request):
+    main_cycle = MainCycle.objects.filter(user=request.user)[0]
+    boost=Boost()
+    if main_cycle.boosts.count()==0:
+        boost.mainCycle=main_cycle
+        boost.save()
+        boost.upgrade()
+        main_cycle.save()
+        boost.save()
+    else:
+        boost=Boost.objects.filter(mainCycle_id=main_cycle.id)[0]
+        boost.upgrade()
+        boost.mainCycle.save()
+        boost.save()
+    return JsonResponse({'clickPower':boost.mainCycle.clickPower,'coinsCount':boost.mainCycle.coinsCount})

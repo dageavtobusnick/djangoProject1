@@ -9,4 +9,5 @@ urlpatterns = [
     path('users/<int:pk>', UserDetailView.as_view()),
     path('cycles/', CycleView.as_view()),
     path('cycles/<int:pk>', CycleDetailView.as_view()),
+    path('buyBoost/', views.buy_boost, name='buyBoost'),
 ]
