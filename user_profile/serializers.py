@@ -4,19 +4,25 @@ from rest_framework import serializers
 from user_profile.models import MainCycle
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id']
 
 
-class UserDetailSerializer(serializers.HyperlinkedModelSerializer):
+class UserDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username']
+        fields = ['id', 'username','cycle']
 
 
-class ClickerDataSerializer(serializers.HyperlinkedModelSerializer):
+class CycleSerializer(serializers.ModelSerializer):
     class Meta:
         model = MainCycle
-        fields = []
+        fields = ['id']
+
+
+class CycleDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MainCycle
+        fields = ['id', 'user', 'coinsCount', 'clickPower']

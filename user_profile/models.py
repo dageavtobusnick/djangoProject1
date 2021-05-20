@@ -3,9 +3,9 @@ from django.db import models
 
 
 class MainCycle(models.Model):
-    user = models.OneToOneField(User, null=False, on_delete=models.CASCADE)
+    user = models.OneToOneField(User,related_name='cycle', null=False, on_delete=models.CASCADE)
     coinsCount = models.IntegerField(default=0)
     clickPower = models.IntegerField(default=1)
 
-    def Click(self):
+    def click(self):
         self.coinsCount += self.clickPower

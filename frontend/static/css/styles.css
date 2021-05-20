@@ -1,0 +1,13 @@
+.cat{
+    width: 200px;
+    height: 271px;
+    opacity: 0.5;
+    margin-left: 30px;
+}
+.cat:hover{
+    opacity: 0.7;
+}
+
+.cat:active{
+    opacity: 1;
+}

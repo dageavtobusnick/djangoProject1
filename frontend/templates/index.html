@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% load static %}
+<html dir="ltr" lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Title </title>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.js"></script>
+    <script src="{% static 'js/index.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" >
+</head>
+<body onload="getUser({{ user.id }})">
+<div align="center">
+    <h1 id="user"></h1>
+    <div class="logout"><a href="/logout">LOGOUT</a></div>
+    <h1 id="coins"></h1>
+    <input type="image" class="cat" src="{% static 'images/cat.png' %}" onclick="callClick()"/>
+</div>
+</body>
+</html>
