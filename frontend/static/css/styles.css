@@ -26,6 +26,20 @@
 }
 
 .upgrade p {
-    width: auto;
+    display: none;
+    width: 350px;
     height: auto;
+    top: 10px;
+    right: 130px;
+    padding-top: 10px;
+    position: absolute;
+    text-align: right;
+
+
+}
+.upgrade p:last-child{
+    top: 45px;
+}
+.upgrade:hover p{
+    display: inline-block;
 }

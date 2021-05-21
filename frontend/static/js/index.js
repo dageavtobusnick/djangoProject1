@@ -8,13 +8,18 @@ async function callClick() {
 }
 
 async function getUser(id) {
-    let response = await fetch("../users/" + id, {method: "GET"})
-    let answer = await response.json()
-    $("#user").text("Welcome, " + answer["username"])
-    let getCycle = await fetch("../cycles/" + answer['cycle'], {method: "GET"})
-    let cycle = await getCycle.json()
-    $('#coins').text('You have ' + cycle["coinsCount"] + " coins")
-    $('#clickPower').text('Your click power is ' + cycle["clickPower"])
+    let response = await fetch("../users/" + id, {method: "GET"});
+    let answer = await response.json();
+    $("#user").text("Welcome, " + answer["username"]);
+    let getCycle = await fetch("../cycles/" + answer['cycle'], {method: "GET"});
+    let cycle = await getCycle.json();
+    $('#coins').text('You have ' + cycle["coinsCount"] + " coins");
+    $('#clickPower').text('Your click power is ' + cycle["clickPower"]);
+    let getBoost = await fetch("../boosts/" + cycle['boosts'][0], {method: "GET"});
+    let boost=await getBoost.json();
+    let nextPrice = parseInt(boost['power']) + parseInt(cycle["clickPower"]);
+    $('#boostLevel').text("NEXT CLICK POWER:"+nextPrice);
+    $('#boostPrice').text("PRICE:"+boost['price']);
 }
 
 function buyBoost(boostLevel) {
@@ -38,8 +43,9 @@ function buyBoost(boostLevel) {
         }).then(data =>{
             $('#coins').text('You have ' + data["coins_count"] + " coins")
             $('#clickPower').text('Your click power is ' + data["click_power"])
-            $('#boostLevel').text("LEVEL:"+data['level'])
-            $('#boostPrice').text("PRICE:"+data['price'])
+            let nextPrice = parseInt(data['power']) + parseInt(data["click_power"]);
+            $('#boostLevel').text("NEXT CLICK POWER:"+nextPrice);
+            $('#boostPrice').text("PRICE:"+data['price']);
     });
     }
 function getCookie(name){

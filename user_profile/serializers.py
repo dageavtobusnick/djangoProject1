@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from user_profile.models import MainCycle
+from user_profile.models import MainCycle, Boost
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -26,3 +26,7 @@ class CycleDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = MainCycle
         fields = ['id', 'user', 'coinsCount', 'clickPower','boosts']
+class BoostDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Boost
+        fields=['id',"price",'power','level']

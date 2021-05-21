@@ -25,4 +25,5 @@ class Boost(models.Model):
         self.main_cycle.coinsCount -= self.price
         self.price *= 2
         self.main_cycle.save()
-        return self.main_cycle.clickPower, self.main_cycle.coinsCount, self.level, self.price
+        self.save()
+        return self.main_cycle.clickPower, self.main_cycle.coinsCount, self.level, self.price,self.power

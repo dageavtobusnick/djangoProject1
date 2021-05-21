@@ -25,8 +25,8 @@ def buy_boost(request):
     main_cycle = MainCycle.objects.filter(user=request.user)[0]
     boost = Boost.objects.get_or_create(main_cycle=main_cycle, level=boost_level)[0]
     boost.save()
-    click_power,coins_count,level,price = boost.upgrade()
-    return {"click_power":click_power,"coins_count":coins_count,"level":level,"price":price}
+    click_power,coins_count,level,price,power = boost.upgrade()
+    return {"click_power":click_power,"coins_count":coins_count,"level":level,"price":price,"power":power}
 
 
 def call_click(request):
