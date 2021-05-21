@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Title </title>
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.js"></script>
     <script src="{% static 'js/index.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" >
 </head>
@@ -15,7 +15,11 @@
     <h1 id="coins"></h1>
     <h1 id="clickPower"></h1>
     <input type="image" class="cat" src="{% static 'images/cat.png' %}" onclick="callClick()"/>
-    <input type="image" class="cat upgrade" src="{% static 'images/boost.png' %}" onclick="buyBoost()"/>
+    <div class="upgrade">
+        <input type="image" class="cat upgrade" src="{% static 'images/boost.png' %}" onclick="buyBoost(0)"/>
+        <p id="boostLevel"></p>
+        <p id="boostPrice"></p>
+    </div>
 </div>
 </body>
 </html>

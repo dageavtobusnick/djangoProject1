@@ -4,25 +4,57 @@ async function callClick() {
         headers: {"X-Requested-With": "XMLHttpRequest"}
     });
     let answer = await response.json();
-    $("#coins").text('You have '+answer.toString()+" coins");
+    $("#coins").text('You have ' + answer.toString() + " coins");
 }
 
-async function getUser(id){
-    let response=await fetch("../users/"+id,{method:"GET"})
-    let answer=await response.json()
-    $("#user").text("Welcome, "+answer["username"])
-    let getCycle=await fetch("../cycles/"+answer['cycle'],{method:"GET"})
-    let cycle=await getCycle.json()
-    $('#coins').text('You have '+cycle["coinsCount"]+ " coins")
-    $('#clickPower').text('Your click power is '+cycle["clickPower"])
+async function getUser(id) {
+    let response = await fetch("../users/" + id, {method: "GET"})
+    let answer = await response.json()
+    $("#user").text("Welcome, " + answer["username"])
+    let getCycle = await fetch("../cycles/" + answer['cycle'], {method: "GET"})
+    let cycle = await getCycle.json()
+    $('#coins').text('You have ' + cycle["coinsCount"] + " coins")
+    $('#clickPower').text('Your click power is ' + cycle["clickPower"])
 }
 
-async function buyBoost(){
-    let response = await fetch("../buyBoost/", {
-        method: "GET",
-        headers: {"X-Requested-With": "XMLHttpRequest"}
+function buyBoost(boostLevel) {
+    const csrftoken = getCookie("csrftoken");
+    fetch("../buyBoost/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrftoken,
+
+        },
+        body: JSON.stringify({
+            boost_level: boostLevel
+        })
+        }).then(response => {
+            if (response.ok)
+                return response.json()
+            else {
+                Promise.reject(response)
+            }
+        }).then(data =>{
+            $('#coins').text('You have ' + data["coins_count"] + " coins")
+            $('#clickPower').text('Your click power is ' + data["click_power"])
+            $('#boostLevel').text("LEVEL:"+data['level'])
+            $('#boostPrice').text("PRICE:"+data['price'])
     });
-    let answer = await response.json();
-    $("#clickPower").text("Your click power is "+answer['clickPower'])
-    $('#coins').text('You have '+answer["coinsCount"]+ " coins")
+    }
+function getCookie(name){
+    let cookieValue=null;
+    if(document.cookie && document.cookie!=''){
+        const cookies=document.cookie.split(";");
+        for (let i=0;i<cookies.length;i++){
+            const cookie=cookies[i].trim();
+            if(cookie.substring(0,name.length+1)===(name+'=')){
+                cookieValue=decodeURIComponent(cookie.substring(name.length+1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }
+
+

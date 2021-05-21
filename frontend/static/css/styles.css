@@ -1,21 +1,31 @@
-.cat{
+.cat {
     width: 200px;
     height: 271px;
     opacity: 0.5;
     margin-left: 30px;
 }
-.cat:hover{
+
+.cat:hover {
     opacity: 0.7;
 }
 
-.cat:active{
+.cat:active {
     opacity: 1;
 }
 
-.upgrade{
+.upgrade {
     position: absolute;
-    top:0;
-    right:0;
+    top: 0;
+    right: 0;
+}
+
+.cat.upgrade {
     width: 100px;
     height: 131px;
+    position: relative;
+}
+
+.upgrade p {
+    width: auto;
+    height: auto;
 }
