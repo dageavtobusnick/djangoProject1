@@ -13,7 +13,7 @@
     opacity: 1;
 }
 
-.upgrade {
+.upgrade-wrapper {
     position: absolute;
     top: 0;
     right: 0;
@@ -22,24 +22,25 @@
 .cat.upgrade {
     width: 100px;
     height: 131px;
-    position: relative;
 }
 
 .upgrade p {
+    display: inline-block;
+
+}
+.upgrade{
+    position: relative;
+}
+.upgrade .boost-info{
     display: none;
-    width: 350px;
-    height: auto;
-    top: 10px;
-    right: 130px;
-    padding-top: 10px;
     position: absolute;
-    text-align: right;
-
-
+    width: 250px;
+    right: 100px;
+    top:20px
 }
-.upgrade p:last-child{
-    top: 45px;
+.boost-info p{
+    line-height: 2px;
 }
-.upgrade:hover p{
+.upgrade:hover .boost-info{
     display: inline-block;
 }

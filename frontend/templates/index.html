@@ -15,10 +15,17 @@
     <h1 id="coins"></h1>
     <h1 id="clickPower"></h1>
     <input type="image" class="cat" src="{% static 'images/cat.png' %}" onclick="callClick()"/>
-    <div class="upgrade">
-        <input type="image" class="cat upgrade" src="{% static 'images/boost.png' %}" onclick="buyBoost(0)"/>
-        <p id="boostLevel"></p>
-        <p id="boostPrice"></p>
+    <div id="boost-wrapper" class="upgrade-wrapper">
+        <div class="upgrade">
+            <input type="image" class="cat upgrade" src="{% static 'images/boost.png' %}" onclick="buyBoost(0)" />
+        </div>
+        <div class="upgrade">
+            <input type="image" class="cat upgrade" src="{% static 'images/boost.png' %}" onclick="buyBoost(0)"/>
+            <div class="boost-info">
+                <p id="boostLevel"></p>
+                <p id="boostPrice"></p>
+            </div>
+        </div>
     </div>
 </div>
 </body>

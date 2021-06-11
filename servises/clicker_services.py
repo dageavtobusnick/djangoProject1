@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 
 from user_profile.models import MainCycle, Boost
+from user_profile.serializers import BoostDetailSerializer
 
 
 def main_page(request):
@@ -31,6 +32,10 @@ def buy_boost(request):
 
 def call_click(request):
     main_cycle = MainCycle.objects.filter(user=request.user)[0]
-    main_cycle.click()
+    is_level_up=main_cycle.click()
     main_cycle.save()
-    return main_cycle.coinsCount
+    if is_level_up:
+        boosts =BoostDetailSerializer(Boost.objects.filter(main_cycle=main_cycle),many=True).data
+        return {"coinsCount":main_cycle.coinsCount,"boosts":boosts}
+    else:
+        return {"coinsCount":main_cycle.coinsCount,"boost":None}

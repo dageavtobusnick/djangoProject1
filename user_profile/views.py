@@ -10,7 +10,7 @@ from user_profile.serializers import UserSerializer, UserDetailSerializer, Cycle
 from .models import MainCycle, Boost
 
 
-class UsersView(generics.ListCreateAPIView):
+class UsersView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -20,7 +20,7 @@ class UserDetailView(generics.RetrieveAPIView):
     serializer_class = UserDetailSerializer
 
 
-class CycleView(generics.ListCreateAPIView):
+class CycleView(generics.ListAPIView):
     queryset = MainCycle.objects.all()
     serializer_class = CycleSerializer
 
@@ -30,14 +30,17 @@ class CycleDetailView(generics.RetrieveAPIView):
     serializer_class = CycleDetailSerializer
 
 
-class BoostDetailView(generics.RetrieveAPIView):
+class BoostListView(generics.ListAPIView):
     queryset = Boost.objects.all()
     serializer_class = BoostDetailSerializer
+    def get_queryset(self):
+        return Boost.objects.filter(main_cycle=self.kwargs['mainCycle'])
 
 
+@api_view(['GET'])
 def call_click(request):
     coins_count = servises.clicker_services.call_click(request)
-    return HttpResponse(coins_count)
+    return Response(coins_count)
 
 
 @api_view(['POST'])

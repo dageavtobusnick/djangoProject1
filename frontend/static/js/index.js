@@ -4,7 +4,9 @@ async function callClick() {
         headers: {"X-Requested-With": "XMLHttpRequest"}
     });
     let answer = await response.json();
-    $("#coins").text('You have ' + answer.toString() + " coins");
+    if (answer.boosts)
+        renderAllBoosts(answer.boosts)
+    $("#coins").text('You have ' + answer['coinsCount'] + " coins");
 }
 
 async function getUser(id) {
@@ -15,11 +17,10 @@ async function getUser(id) {
     let cycle = await getCycle.json();
     $('#coins').text('You have ' + cycle["coinsCount"] + " coins");
     $('#clickPower').text('Your click power is ' + cycle["clickPower"]);
-    let getBoost = await fetch("../boosts/" + cycle['boosts'][0], {method: "GET"});
-    let boost=await getBoost.json();
-    let nextPrice = parseInt(boost['power']) + parseInt(cycle["clickPower"]);
-    $('#boostLevel').text("NEXT CLICK POWER:"+nextPrice);
-    $('#boostPrice').text("PRICE:"+boost['price']);
+    let getBoost = await fetch("../boosts/" + answer.cycle, {method: "GET"});
+    let boosts=await getBoost.json();
+    if (boosts)
+        renderAllBoosts(boosts);
 }
 
 function buyBoost(boostLevel) {
@@ -36,16 +37,17 @@ function buyBoost(boostLevel) {
         })
         }).then(response => {
             if (response.ok)
-                return response.json()
+                return response.json();
             else {
-                Promise.reject(response)
+                Promise.reject(response);
             }
         }).then(data =>{
-            $('#coins').text('You have ' + data["coins_count"] + " coins")
-            $('#clickPower').text('Your click power is ' + data["click_power"])
+            $('#coins').text('You have ' + data["coins_count"] + " coins");
+            $('#clickPower').text('Your click power is ' + data["click_power"]);
             let nextPrice = parseInt(data['power']) + parseInt(data["click_power"]);
-            $('#boostLevel').text("NEXT CLICK POWER:"+nextPrice);
-            $('#boostPrice').text("PRICE:"+data['price']);
+            $('#boostLevel_'+boostLevel).text("Level:"+boostLevel)
+            $('#boostPower_'+boostLevel).text("NEXT CLICK POWER:"+nextPrice);
+            $('#boostPrice_'+boostLevel).text("PRICE:"+data['price']);
     });
     }
 function getCookie(name){
@@ -62,5 +64,22 @@ function getCookie(name){
     }
     return cookieValue;
 }
+function renderAllBoosts(boosts){
+    $('#boost-wrapper').empty();
+    boosts.forEach(boost=>{
+        renderBoost(boost);
+    })
+}
 
-
+function renderBoost(boost){
+    totalPower=$('#clickPower').text().split(" ");
+    nextPower=parseInt(boost['power'])+parseInt(totalPower[totalPower.length-1]);
+    $(`<div class="upgrade">
+            <input type="image" class="cat upgrade" src="/static/images/boost.png" onclick="buyBoost(${boost['level']})"/>
+            <div class="boost-info">
+                <p id="boostLevel_${boost['level']}" >${"Level:"+boost['level']}</p>
+                <p id="boostPower_${boost['level']}" >${"NEXT CLICK POWER:"+nextPower}</p>
+                <p id="boostPrice_${boost['level']}">${"PRICE:"+boost['price']}</p>
+            </div>
+        </div>`).appendTo($('#boost-wrapper'));
+}

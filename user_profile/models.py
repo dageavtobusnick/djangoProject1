@@ -11,6 +11,15 @@ class MainCycle(models.Model):
 
     def click(self):
         self.coinsCount += self.clickPower
+        return self.check_level()
+
+    def check_level(self):
+        if self.coinsCount > (self.level ** 2 + 1) * 1000:
+            self.level += 1
+            boost = Boost(main_cycle=self, level=self.level)
+            boost.save()
+            return True
+        return False
 
 
 class Boost(models.Model):
@@ -26,4 +35,4 @@ class Boost(models.Model):
         self.price *= 2
         self.main_cycle.save()
         self.save()
-        return self.main_cycle.clickPower, self.main_cycle.coinsCount, self.level, self.price,self.power
+        return self.main_cycle.clickPower, self.main_cycle.coinsCount, self.level, self.price, self.power
