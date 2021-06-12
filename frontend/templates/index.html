@@ -4,29 +4,26 @@
 <head>
     <meta charset="utf-8">
     <title>Title </title>
-    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.js" type="text/javascript"></script>
     <script src="{% static 'js/index.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}" >
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
 </head>
 <body onload="getUser({{ user.id }})">
-<div align="center">
-    <h1 id="user"></h1>
-    <div class="logout"><a href="/logout">LOGOUT</a></div>
-    <h1 id="coins"></h1>
-    <h1 id="clickPower"></h1>
-    <input type="image" class="cat" src="{% static 'images/cat.png' %}" onclick="callClick()"/>
-    <div id="boost-wrapper" class="upgrade-wrapper">
-        <div class="upgrade">
-            <input type="image" class="cat upgrade" src="{% static 'images/boost.png' %}" onclick="buyBoost(0)" />
-        </div>
-        <div class="upgrade">
-            <input type="image" class="cat upgrade" src="{% static 'images/boost.png' %}" onclick="buyBoost(0)"/>
-            <div class="boost-info">
-                <p id="boostLevel"></p>
-                <p id="boostPrice"></p>
-            </div>
-        </div>
+<input id="boost-png" type="hidden" value="{% static 'images/boost.png' %}">
+<input id="auto-boost-png" type="hidden" value="{% static 'images/auto-boost.png' %}">
+<header>
+    <div class="logout">
+        <h1 id="user"></h1>
+        <a href="/logout">LOGOUT</a>
     </div>
-</div>
+    <div class="user-info">
+        <h1 id="coins"></h1>
+        <h1 id="clickPower"></h1>
+        <h1 id="autoClickPower"></h1>
+    </div>
+</header>
+<div align="center"><input class="cat" onclick="callClick()" src="{% static 'images/cat.png' %}" type="image"/></div>
+<ul class="upgrade-wrapper" id="boost-wrapper">
+</ul>
 </body>
 </html>

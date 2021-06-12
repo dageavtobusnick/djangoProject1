@@ -1,5 +1,4 @@
 from django.contrib.auth.models import User
-from rest_framework.decorators import api_view
 
 from user_profile.models import MainCycle, Boost
 from user_profile.serializers import BoostDetailSerializer
@@ -14,28 +13,27 @@ def main_page(request):
         return True, 'login', {}
 
 
-def call_click(request):
-    main_cycle = MainCycle.objects.filter(user=request.user)[0]
-    main_cycle.click()
-    main_cycle.save()
-    return main_cycle.coinsCount
-
-
 def buy_boost(request):
     boost_level = request.data["boost_level"]
     main_cycle = MainCycle.objects.filter(user=request.user)[0]
     boost = Boost.objects.get_or_create(main_cycle=main_cycle, level=boost_level)[0]
     boost.save()
-    click_power,coins_count,level,price,power = boost.upgrade()
-    return {"click_power":click_power,"coins_count":coins_count,"level":level,"price":price,"power":power}
+    main_cycle, level, price, power = boost.upgrade()
+    return {"click_power": main_cycle.clickPower,
+            'auto_click_power': main_cycle.autoClickPower,
+            "coins_count": main_cycle.coinsCount,
+            "level": level,
+            "price": price,
+            "power": power,
+            "main_cycle": main_cycle.id}
 
 
-def call_click(request):
-    main_cycle = MainCycle.objects.filter(user=request.user)[0]
-    is_level_up=main_cycle.click()
-    main_cycle.save()
-    if is_level_up:
-        boosts =BoostDetailSerializer(Boost.objects.filter(main_cycle=main_cycle),many=True).data
-        return {"coinsCount":main_cycle.coinsCount,"boosts":boosts}
-    else:
-        return {"coinsCount":main_cycle.coinsCount,"boost":None}
+def set_cycle(request):
+    user = request.user
+    data = request.data
+    cycle = MainCycle.objects.filter(user=user)
+    cycle.update(coinsCount=data['coinsCount'])
+    cycle[0].check_level()
+    cycle[0].save()
+    boosts = BoostDetailSerializer(Boost.objects.filter(main_cycle=cycle[0]), many=True).data
+    return {'success': 'ok', "coinsCount": cycle[0].coinsCount, "boosts": boosts}

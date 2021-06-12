@@ -2,11 +2,57 @@
     width: 200px;
     height: 271px;
     opacity: 0.5;
-    margin-left: 30px;
+    margin-left: -80px;
+    position: absolute;
 }
 
 .cat:hover {
     opacity: 0.7;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.logout {
+    float: right;
+}
+
+.logout h1 {
+    padding: 0;
+    margin: 0;
+}
+
+.logout a {
+    width: 100px;
+    height: 40px;
+    border-radius: 3px;
+    background-color: lightslategrey;
+    display: inline-block;
+    text-align: center;
+    vertical-align: center;
+    margin-left: 60px;
+    padding-top: 10px;
+    box-sizing: border-box;
+    color: white;
+    text-decoration: none;
+}
+
+header {
+    width: 100%;
+    height: 15%;
+    background-color: darkgrey;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+
+.user-info {
+    float: left;
+    font-size: 8px;
+    font-weight: normal;
+    color: white;
 }
 
 .cat:active {
@@ -14,9 +60,13 @@
 }
 
 .upgrade-wrapper {
-    position: absolute;
+    margin: 0;
+    float: right;
     top: 0;
     right: 0;
+    height: 82vh;
+    width: 350px;
+    overflow-y: scroll
 }
 
 .cat.upgrade {
@@ -28,19 +78,41 @@
     display: inline-block;
 
 }
-.upgrade{
-    position: relative;
+
+li {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: right;
+    width: 100%;
+    margin-bottom: 10px;
 }
-.upgrade .boost-info{
+
+.upgrade {
+    text-align: right;
+    position: relative;
+    width: 130px;
+    display: inline-block;
+}
+
+.inactive {
+    background-color: indianred;
+    opacity: 0.7;
+    border-radius: 6px;
+}
+
+.upgrade .boost-info {
     display: none;
     position: absolute;
-    width: 250px;
-    right: 100px;
-    top:20px
+    width: 300px;
+    right: 130px;
+    top: 20px
 }
-.boost-info p{
+
+.boost-info p {
     line-height: 2px;
 }
-.upgrade:hover .boost-info{
+
+.upgrade:hover .boost-info {
     display: inline-block;
 }

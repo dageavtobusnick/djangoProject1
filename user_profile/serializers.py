@@ -13,7 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
 class UserDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username','cycle']
+        fields = ['id', 'username', 'cycle']
 
 
 class CycleSerializer(serializers.ModelSerializer):
@@ -25,9 +25,10 @@ class CycleSerializer(serializers.ModelSerializer):
 class CycleDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = MainCycle
-        fields = ['id', 'user', 'coinsCount', 'clickPower','boosts']
+        fields = ['id', 'user', 'coinsCount', 'autoClickPower', 'clickPower', 'boosts']
+
 
 class BoostDetailSerializer(serializers.ModelSerializer):
     class Meta:
-        model=Boost
-        fields=['id',"price",'power','level']
+        model = Boost
+        fields = ['id', "price", 'power', 'level', 'boostType']

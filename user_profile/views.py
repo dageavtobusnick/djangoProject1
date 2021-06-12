@@ -1,5 +1,4 @@
 from django.contrib.auth.models import User
-from django.http import HttpResponse
 from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -33,17 +32,18 @@ class CycleDetailView(generics.RetrieveAPIView):
 class BoostListView(generics.ListAPIView):
     queryset = Boost.objects.all()
     serializer_class = BoostDetailSerializer
+
     def get_queryset(self):
         return Boost.objects.filter(main_cycle=self.kwargs['mainCycle'])
-
-
-@api_view(['GET'])
-def call_click(request):
-    coins_count = servises.clicker_services.call_click(request)
-    return Response(coins_count)
 
 
 @api_view(['POST'])
 def buy_boost(request):
     params = servises.clicker_services.buy_boost(request)
+    return Response(params)
+
+
+@api_view(['POST'])
+def set_main_cycle(request):
+    params = servises.clicker_services.set_cycle(request)
     return Response(params)
